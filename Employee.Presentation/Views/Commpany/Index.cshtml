@@ -1,0 +1,33 @@
+﻿@model List<Employee.Data.Models.CompanyModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<table class="table">
+    <tr>
+
+        <th>CompanyName</th>
+        <th>CompanyCity</th>
+        <th>CompanyId</th>
+
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var kisi in Model)
+    {
+        <tr>
+
+            <td>@kisi.CompanyName</td>
+            <td>@kisi.CompanyCity</td>
+            <th>@kisi.CompanyId</th>
+            <td>
+                <a href="/Commpany/Update/@kisi.CompanyId">Update</a>
+                @Html.ActionLink("Delete", "Delete", new { Id = kisi.CompanyId }, new { onclick = "return confirm('Kaydı silmek istiyor musunuz');" });
+                <a href="/Commpany/listperson/@kisi.CompanyId">Persons</a>
+        </tr>
+    }
+</table>
+<a href="/Commpany/Insert/">CreateCompany</a>
+

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+<form class="form-horizontal" asp-action="Login" asp-controller="Login" method="post">
+    <div class="form-group">
+        @*<label>Name</label>
+            <input type="text" class="form-control" name="Name" />*@
+        @Html.Label("Email")
+        @Html.TextBox("mail", null, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @*<label>Surname</label>
+            <input type="text" class="form-control" name="Surname" />*@
+        @Html.Label("Password")
+        @Html.TextBox("pas", null, new { @class = "form-control" })
+    </div>
+    <a href="/Login/Register">CreateAccount</a>
+
+    <input type="submit" class="btn btn-primary" value="Kaydet" />
+
+</form>
+

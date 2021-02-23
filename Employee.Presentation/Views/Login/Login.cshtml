@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Giriş</h2>
+
+        <form action="Login" method="post">
+            <div class="form-group">
+                <label>EMail</label>
+                <input type="text" class="form-control" name="Email" value="" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="Password" class="form-control" value="" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" name="name" value="Giriş" />
+            </div>
+            <a href="/Login/Register">CreateAccount</a>
+
+        </form>
+    </div>
+</body>
+</html>

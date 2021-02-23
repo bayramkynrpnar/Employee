@@ -1,0 +1,35 @@
+﻿@model Employee.Data.Models.PersonModels
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Guncelle</h2>
+<form class="form-horizontal" method="post" action="/Person/Update/">
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name, null, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Surname)
+        @Html.TextBoxFor(x => x.Surname, null, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(x => x.Password)
+       
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(x => x.CompanyId)
+       
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(x => x.CompanyModels)
+      
+    </div>
+
+
+    <input type="submit" class="btn btn-primary" value="Update" />
+
+</form>
+

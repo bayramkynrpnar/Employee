@@ -1,0 +1,39 @@
+﻿@model List<Employee.Data.Models.PersonModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>CompanyId</th>
+        
+
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var kisi in Model)
+    {
+        <tr>
+            <td>@kisi.Id</td>
+            <td>@kisi.Name</td>
+            <td>@kisi.Surname</td>
+            <td>@kisi.CompanyId</td>
+
+
+
+            <td>
+                <a href="/Person/Update/@kisi.Id">Update</a>
+                @Html.ActionLink("Delete", "Delete", new { Id = kisi.Id }, new { onclick = "return confirm('Kaydı silmek istiyor musunuz');" });
+                
+</tr>
+        
+    }
+</table>
+<a href="/Person/InsertPerson/">Create</a>
+
+
