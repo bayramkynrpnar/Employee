@@ -9,8 +9,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Employe.DataAccess
 {
     public interface IRepository<T> where T : class
-    {
+    {   /// <summary>
+    /// Tüm veriyi Getir
+    /// </summary>
         IQueryable<T> GetAll();
+       
         IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
         int Count();
         int Count(Expression<Func<T, bool>> predicate);

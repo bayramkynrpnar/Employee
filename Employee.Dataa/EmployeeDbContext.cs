@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Employee.Data.Models
-{
+{[Authorize]
     public class EmployeeDbContext : DbContext
     {
         public DbSet<PersonModels> personModels { get; set; }
@@ -12,6 +13,7 @@ namespace Employee.Data.Models
 
         public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options) : base(options)
         {
+
         }
 
         public EmployeeDbContext()
@@ -32,10 +34,7 @@ namespace Employee.Data.Models
 
         }
 
-        public object GetIncludePaths(Type type)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 
 }

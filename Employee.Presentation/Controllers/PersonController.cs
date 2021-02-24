@@ -10,7 +10,7 @@ namespace Employee.Presentation.Controllers
 {
     public class PersonController : Controller
     {
-        CompanyModels companyModels = new CompanyModels();
+        
 
         [HttpGet]
         public IActionResult Index()
@@ -23,13 +23,15 @@ namespace Employee.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult InsertPerson()
+        public IActionResult InsertPerson(int id)
         {
-            using (var uow = new UnitOfWork<EmployeeDbContext>())
+            using(var uow = new UnitOfWork<EmployeeDbContext>())
             {
-                uow.GetRepository<CompanyModels>().Get(companyModels.CompanyId);
-
+                
             }
+            ViewData["CompanyId"] = id;
+            
+                
             return View();
 
         }
@@ -41,11 +43,12 @@ namespace Employee.Presentation.Controllers
             {
                 try
                 {
-
+                  
+                   
                     uow.GetRepository<PersonModels>().Add(kisi);
 
                     uow.SaveChanges();
-                    TempData["BasariliMesaj"] = "Ekleme İşlemi Başarıyla Gerçekleşti";
+                    TempData["BasariliMesaj"] = "Ekleme İşlemi Başarıyla Gerçekleşti";           
                 }
                 catch (Exception)
                 {

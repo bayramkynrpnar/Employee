@@ -12,11 +12,15 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Umbraco.Core.Models.Identity;
 using Umbraco.Core.Migrations.Upgrade.V_8_9_0;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Employee.Presentation.Controllers
 {
     public class LoginController : Controller
     {
+       
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -25,6 +29,7 @@ namespace Employee.Presentation.Controllers
         }
 
         [HttpPost]
+
         public async Task<IActionResult> Login(PersonModels personModels)
         {
             if (LoginUser(personModels.Email, personModels.Password))
@@ -36,22 +41,22 @@ namespace Employee.Presentation.Controllers
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
 
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);  
                 await HttpContext.SignInAsync(principal);
 
-                //Just redirect to our index after logging in. 
+                
                 return RedirectToAction("Index", "Commpany");
             }
             return View();
         }
-        public async Task<IActionResult> LogOut()
+        public IActionResult  LogOut()
         {
-            await HttpContext.SignOutAsync();
+            var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login");
         }
-        private bool LoginUser(string pas, string mail)
-            {
+        private bool LoginUser(string mail, string pas)
+        {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 var Logindb = uow.GetRepository<PersonModels>().GetAll().FirstOrDefault(x => x.Email == mail && x.Password == pas);
@@ -66,54 +71,36 @@ namespace Employee.Presentation.Controllers
                 }
 
             }
-            //if (username == "cagatay" && password == "123")
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
         }
-        //[HttpPost]
-        //public ActionResult Login(string pas, string mail)
-        //{
-        //    using (var uow = new UnitOfWork<EmployeeDbContext>())
-        //    {
-        //        var Logindb = uow.GetRepository<PersonModels>().GetAll().FirstOrDefault(x => x.Email == mail && x.Password == pas);
-        //        if (Logindb != null)
-        //        {
-        //            return RedirectToAction("Index","Commpany");
-        //        }
-        //        else
-        //        {
-        //            TempData["HataliMesaj"] = "Hata  oluştu yeniden dene";
-        //            return View();
-        //        }
 
-        //    }
 
-          
-            
-
-        //}
+        
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            using (var uow = new UnitOfWork<EmployeeDbContext>())
+            {
+                ViewBag.list =   uow.GetRepository<CompanyModels>().GetAll().ToList();
+
+                return View();
+            }
         }
         [HttpPost]
         public IActionResult Register(PersonModels person)
-        {
+            {
 
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 try
                 {
+                 
+
                     uow.GetRepository<PersonModels>().Add(person);
+                    
+                  
 
                     uow.SaveChanges();
+                    
                     TempData["BasariliMesaj"] = "Ekleme İşlemi Başarıyla Gerçekleşti";
                 }
                 catch (Exception)

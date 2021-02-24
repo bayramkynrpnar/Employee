@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Employe.DataAccess;
 using Employee.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Nest;
@@ -11,12 +12,12 @@ using Nest;
 
 namespace Employee.Presentation.Controllers
 {
-
+    [Authorize]
 
     public class CommpanyController : Controller
     {
 
-
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -31,6 +32,12 @@ namespace Employee.Presentation.Controllers
         {
             return View();
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kisi"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Insert(CompanyModels kisi)
         {
@@ -104,15 +111,16 @@ namespace Employee.Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
-
+       
         [HttpGet]
+        
         public IActionResult ListPerson(int id)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 var list = uow.GetRepository<PersonModels>().GetAll(x => x.CompanyId == id).ToList();
 
-
+                ViewData["CompanyId"] = id;
                 return View(list);
             }
 

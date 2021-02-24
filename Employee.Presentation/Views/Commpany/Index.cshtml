@@ -26,8 +26,10 @@
                 <a href="/Commpany/Update/@kisi.CompanyId">Update</a>
                 @Html.ActionLink("Delete", "Delete", new { Id = kisi.CompanyId }, new { onclick = "return confirm('Kaydı silmek istiyor musunuz');" });
                 <a href="/Commpany/listperson/@kisi.CompanyId">Persons</a>
-        </tr>
+</tr>
     }
 </table>
 <a href="/Commpany/Insert/">CreateCompany</a>
+                <a asp-action="Logout" asp-controller="Login"> Logout</a>
+
 

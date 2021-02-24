@@ -20,6 +20,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
+        "MYSQL_URI": "server=localhost;port=3306;database=ntier;user=root;password=Ba26491312",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"
