@@ -19,7 +19,10 @@ namespace Employee.Presentation.Controllers
 {
     public class LoginController : Controller
     {
-       
+       /// <summary>
+       /// Login Ekranını Getirir
+       /// </summary>
+       /// <returns></returns>
 
         [HttpGet]
         public ActionResult Login()
@@ -27,7 +30,11 @@ namespace Employee.Presentation.Controllers
 
             return View();
         }
-
+        /// <summary>
+        /// Login olmuş kullanıcının diğer methodlara erişimine izin verilecek
+        /// </summary>
+        /// <param name="personModels"></param>
+        /// <returns></returns>
         [HttpPost]
 
         public async Task<IActionResult> Login(PersonModels personModels)
@@ -49,12 +56,22 @@ namespace Employee.Presentation.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// Çıkış yapmak için kullanılır
+        /// </summary>
+        /// <returns></returns>
         public IActionResult  LogOut()
         {
             var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login");
         }
+        /// <summary>
+        /// Mail ve şifre doğru girildiyse true döner, girilmediyse false döner
+        /// </summary>
+        /// <param name="mail"></param>
+        /// <param name="pas"></param>
+        /// <returns></returns>
         private bool LoginUser(string mail, string pas)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
@@ -73,7 +90,10 @@ namespace Employee.Presentation.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Kullanıcı kayıt ekranıdır. Hangi Companye mensup olduğunu seçmesi için companyler listelendi
+        /// </summary>
+        /// <returns></returns>
         
         [HttpGet]
         public IActionResult Register()
@@ -85,6 +105,11 @@ namespace Employee.Presentation.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// Person kayıt ekranı
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Register(PersonModels person)
             {
@@ -92,26 +117,16 @@ namespace Employee.Presentation.Controllers
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 try
-                {
-                 
-
-                    uow.GetRepository<PersonModels>().Add(person);
-                    
-                  
-
-                    uow.SaveChanges();
-                    
+                {                
+                    uow.GetRepository<PersonModels>().Add(person);                                   
+                    uow.SaveChanges();                   
                     TempData["BasariliMesaj"] = "Ekleme İşlemi Başarıyla Gerçekleşti";
                 }
                 catch (Exception)
-                {
-
+               {
                     TempData["HataliMesaj"] = "Hata  oluştu yeniden dene";
-
-
                 }
                 return RedirectToAction("Login");
-
             }
 
         }

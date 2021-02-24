@@ -17,8 +17,12 @@ namespace Employee.Presentation.Controllers
     public class CommpanyController : Controller
     {
 
-        
+        /// <summary>
+        /// companyModele ait bütün veriyi listelemek çiin kullanılır
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        
         public IActionResult Index()
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
@@ -34,7 +38,7 @@ namespace Employee.Presentation.Controllers
         }
         
         /// <summary>
-        /// 
+        /// CompanyModelse Company eklemek için kullanılır
         /// </summary>
         /// <param name="kisi"></param>
         /// <returns></returns>
@@ -60,6 +64,11 @@ namespace Employee.Presentation.Controllers
 
             }
         }
+        /// <summary>
+        /// CompanyModelse ait verileri update etmek için kullanılır. Update edilmek istenen kişiyi getirir
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -74,33 +83,28 @@ namespace Employee.Presentation.Controllers
                 return View(kisi);
             }
         }
+        /// <summary>
+        ///  CompanyModelse ait verileri update etmek için kullanılır.
+        /// </summary>
+        /// <param name="kisi"></param>
+        /// <returns></returns>
         [HttpPost]
 
         public IActionResult Update(CompanyModels kisi)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
-                uow.GetRepository<CompanyModels>().Update(kisi);
-                //if (eskikisi == null)
-                //{
-
-                //    TempData["HataliMesaj"] = "Güncellenmek istenen kayıt bulunamadı";
-                //    return RedirectToAction("Index");
-                //}
-
-                //    eskikisi.CompanyName = kisi.CompanyName;
-                //    eskikisi.CompanyCity = kisi.CompanyCity;
+                uow.GetRepository<CompanyModels>().Update(kisi);          
                 uow.SaveChanges();
-
                 TempData["BasariliMesaj"] = "Kişi bilgileri başarıyla güncellendi";
                 return RedirectToAction("Index");
-
-
-
             }
-
         }
-
+        /// <summary>
+        /// İdsi getirilen Companymodelsi silmek için kullanılır
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
@@ -111,7 +115,11 @@ namespace Employee.Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
-       
+       /// <summary>
+       /// Seçilen companye mensup personları listelemek için kullanılır
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         [HttpGet]
         
         public IActionResult ListPerson(int id)
@@ -124,17 +132,7 @@ namespace Employee.Presentation.Controllers
                 return View(list);
             }
 
-        }
-
-        //public IActionResult GetCompanyId(int id)
-        //{
-        //    using (var uow = new UnitOfWork<EmployeeDbContext>())
-        //    {
-        //        var list = uow.GetRepository<CompanyModels>().Get(x => x.CompanyId == id);
-        //    }
-        //}
-
-
+        }      
 
     }
 }

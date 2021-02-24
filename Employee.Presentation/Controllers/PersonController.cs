@@ -10,7 +10,10 @@ namespace Employee.Presentation.Controllers
 {
     public class PersonController : Controller
     {
-        
+        /// <summary>
+        /// Personları listeler
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         public IActionResult Index()
@@ -21,21 +24,21 @@ namespace Employee.Presentation.Controllers
                 return View(list);
             }
         }
-
+        /// <summary>
+        /// Person ekleme ekranı
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult InsertPerson(int id)
-        {
-            using(var uow = new UnitOfWork<EmployeeDbContext>())
-            {
-                
-            }
-            ViewData["CompanyId"] = id;
-            
-                
+        public IActionResult InsertPerson()
+        {                                    
             return View();
-
         }
-
+        /// <summary>
+        /// Person eklemek için kullanılır
+        /// </summary>
+        /// <param name="kisi"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Insert(PersonModels kisi)
         {
@@ -61,7 +64,11 @@ namespace Employee.Presentation.Controllers
 
             }
         }
-
+        /// <summary>
+        /// Update edilecek personu getirir
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -76,32 +83,27 @@ namespace Employee.Presentation.Controllers
                 return View(kisi);
             }
         }
-        
+        /// <summary>
+        /// Personu update etmek için kullanılır
+        /// </summary>
+        /// <param name="kisi"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Update(PersonModels kisi)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
-                uow.GetRepository<PersonModels>().Update(kisi);
-                //if (eskikisi == null)
-                //{
-
-                //    TempData["HataliMesaj"] = "Güncellenmek istenen kayıt bulunamadı";
-                //    return RedirectToAction("Index");
-                //}
-
-                //    eskikisi.CompanyName = kisi.CompanyName;
-                //    eskikisi.CompanyCity = kisi.CompanyCity;
+                uow.GetRepository<PersonModels>().Update(kisi);              
                 uow.SaveChanges();
-
                 TempData["BasariliMesaj"] = "Kişi bilgileri başarıyla güncellendi";
                 return RedirectToAction("Index","Commpany");
-
-
-
             }
-
         }
+        /// <summary>
+        /// Seçilen personu silmek için kullanılır
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public ActionResult Delete(int id)
         {

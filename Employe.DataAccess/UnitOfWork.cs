@@ -15,7 +15,9 @@ namespace Employe.DataAccess
         private DbContext dbContext;
         private bool disposed = false;
         public readonly List<string> ErrorMessageList = new List<string>();
-
+        /// <summary>
+        /// Veri bağlantısı
+        /// </summary>
         private DbContext DbContext
         {
             get
@@ -34,12 +36,19 @@ namespace Employe.DataAccess
             DbContext.Database.CloseConnection();
             DbContext = null;
         }
-
+        /// <summary>
+        /// Repository başlatmak için kullanılır
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IRepository<T> GetRepository<T>() where T : class
         {
             return new Repository<T>(DbContext);
         }
-
+        /// <summary>
+        /// Kaydet
+        /// </summary>
+        /// <returns></returns>
         public int SaveChanges()
         {
             int result = -1;
