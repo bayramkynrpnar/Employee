@@ -7,7 +7,6 @@ using Employee.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Nest;
 
 
 namespace Employee.Presentation.Controllers

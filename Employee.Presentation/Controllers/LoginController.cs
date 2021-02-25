@@ -10,8 +10,7 @@ using Employe.DataAccess;
 
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using Umbraco.Core.Models.Identity;
-using Umbraco.Core.Migrations.Upgrade.V_8_9_0;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
