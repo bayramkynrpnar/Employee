@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Employe.DataAccess;
 using Employee.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employee.Presentation.Controllers
 {
+    [Authorize]
     public class PersonController : Controller
     {
         /// <summary>
@@ -30,8 +32,10 @@ namespace Employee.Presentation.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult InsertPerson()
-        {                                    
+        public IActionResult InsertPerson(int id)
+        {
+            
+            ViewData["CompanyId"] = id;
             return View();
         }
         /// <summary>
@@ -46,7 +50,7 @@ namespace Employee.Presentation.Controllers
             {
                 try
                 {
-                  
+                   
                    
                     uow.GetRepository<PersonModels>().Add(kisi);
 

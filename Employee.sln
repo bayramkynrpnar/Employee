@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee.Presentation", "Em
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employe.DataAccess", "Employe.DataAccess\Employe.DataAccess.csproj", "{B1D623C4-A1F2-4696-9032-727CE7663B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee.Dataa", "Employee.Dataa\Employee.Dataa.csproj", "{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee.Dataa", "Employee.Dataa\Employee.Dataa.csproj", "{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee.MiddleWare", "Employee.MiddleWare\Employee.MiddleWare.csproj", "{D26E1567-A95E-41D9-956F-0DBB80243FA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26E1567-A95E-41D9-956F-0DBB80243FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26E1567-A95E-41D9-956F-0DBB80243FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26E1567-A95E-41D9-956F-0DBB80243FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26E1567-A95E-41D9-956F-0DBB80243FA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{401F2BE2-4AA6-4D70-AD45-DFEA39DB7677} = {8FB2DB65-48B8-4D42-A841-70E46E45F271}
 		{B1D623C4-A1F2-4696-9032-727CE7663B46} = {A4DA6CFD-5544-4369-B7D1-1BF9F34DC269}
 		{097DBFAD-A60E-477E-8D4F-E5531E7B3E1F} = {A4DA6CFD-5544-4369-B7D1-1BF9F34DC269}
+		{D26E1567-A95E-41D9-956F-0DBB80243FA2} = {8FB2DB65-48B8-4D42-A841-70E46E45F271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94BE9194-6A4B-46DA-8988-1C5CAA9EAB22}

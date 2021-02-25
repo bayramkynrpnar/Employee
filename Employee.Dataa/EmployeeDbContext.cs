@@ -39,7 +39,8 @@ namespace Employee.Data.Models
         {
             modelBuilder.Entity<PersonModels>()
                 .HasOne(p => p.CompanyModels)
-                .WithMany(b => b.PersonModels);
+                .WithMany(b => b.PersonModels)
+                .HasForeignKey(x => x.CompanyId);
 
 
 
