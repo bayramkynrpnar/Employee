@@ -20,14 +20,11 @@ namespace Employee.Presentation.Authorization
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-
             var token = context.HttpContext.Request.Cookies.Keys.FirstOrDefault(x => x.Contains("UserToken"));
             if (string.IsNullOrEmpty(token))
             {
                 context.Result = new RedirectResult("http://localhost:5000/Login/Login");
             }
-
-
-                    }
+        }
     }
 }

@@ -68,9 +68,6 @@ namespace Employee.Presentation.Controllers
 
                 var tokenString =TokenFactory.GenerateJSONWebToken(checkUser,_config);// token string oluyor burda
 
-                //cookies bilgilerini burda oluşturuyorum
-                HttpContext.Session.SetString("USER_INFO", JsonConvert.SerializeObject(checkUser.Name));
-                HttpContext.Session.SetString("USER_COMPANY_INFO", JsonConvert.SerializeObject(checkUser.CompanyModels));
                 HttpContext.Response.Cookies.Append("UserToken", tokenString,
                    new CookieOptions()
                    {
