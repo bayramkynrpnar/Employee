@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Employe.DataAccess;
 using Employee.Data.Models;
+using Employee.Presentation.Authorization;
+using Employee.Presentation.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Employee.Presentation.Controllers
 {
-    [Authorize]
+    [Authorization]
     public class PersonController : Controller
     {
         /// <summary>
@@ -38,6 +43,8 @@ namespace Employee.Presentation.Controllers
             ViewData["CompanyId"] = id;
             return View();
         }
+
+      
         /// <summary>
         /// Person eklemek için kullanılır
         /// </summary>
@@ -50,8 +57,8 @@ namespace Employee.Presentation.Controllers
             {
                 try
                 {
-                   
-                   
+                    kisi.Password = CryptoHelpers.Instance.MD5(kisi.Password);
+                    
                     uow.GetRepository<PersonModels>().Add(kisi);
 
                     uow.SaveChanges();

@@ -13,15 +13,37 @@ using Microsoft.AspNetCore.Authentication;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Employee.Presentation.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System.Net;
+using Employee.Presentation.Helpers;
+using Employee.Presentation.Authorization;
 
 namespace Employee.Presentation.Controllers
 {
+   
     public class LoginController : Controller
     {
-       /// <summary>
-       /// Login Ekranını Getirir
-       /// </summary>
-       /// <returns></returns>
+
+
+
+
+        private IConfiguration _config;
+
+        public LoginController(IConfiguration config)
+        {
+            _config = config;
+        }
+
+        /// <summary>
+        /// Login Ekranını Getirir
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         public ActionResult Login()
@@ -35,55 +57,68 @@ namespace Employee.Presentation.Controllers
         /// <param name="personModels"></param>
         /// <returns></returns>
         [HttpPost]
-
-        public async Task<IActionResult> Login(PersonModels personModels)
+        public IActionResult Login(PersonModels personModels)
         {
-            if (LoginUser(personModels.Email, personModels.Password))
+            IActionResult response = Unauthorized();
+            personModels.Password = CryptoHelpers.Instance.MD5(personModels.Password);
+                var checkUser = LoginUser(personModels.Email, personModels.Password);
+            if (checkUser != null)
             {
-                var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, personModels.Email)
-            };
+               
 
-                var userIdentity = new ClaimsIdentity(claims, "login");
+                var tokenString =TokenFactory.GenerateJSONWebToken(checkUser,_config);// token string oluyor burda
 
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);  
-                await HttpContext.SignInAsync(principal);
-
+                //cookies bilgilerini burda oluşturuyorum
+                HttpContext.Session.SetString("USER_INFO", JsonConvert.SerializeObject(checkUser.Name));
+                HttpContext.Session.SetString("USER_COMPANY_INFO", JsonConvert.SerializeObject(checkUser.CompanyModels));
+                HttpContext.Response.Cookies.Append("UserToken", tokenString,
+                   new CookieOptions()
+                   {
+                       Domain = Environment.GetEnvironmentVariable("COOKIE_DOMAIN"),
+                       Expires = DateTimeOffset.Now.AddHours(4)
+                   });                
                 
+
                 return RedirectToAction("Index", "Commpany");
             }
             return View();
         }
+
+      
+
+
+
         /// <summary>
         /// Çıkış yapmak için kullanılır
         /// </summary>
         /// <returns></returns>
-        public IActionResult  LogOut()
+        
+        public IActionResult Logout()
         {
-            var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return RedirectToAction("Login");
+            HttpContext.Session.Clear();
+            HttpContext.Response.Cookies.Delete("UserToken");
+            return RedirectToAction("Login", "Login");
         }
+      
         /// <summary>
         /// Mail ve şifre doğru girildiyse true döner, girilmediyse false döner
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="pas"></param>
         /// <returns></returns>
-        private bool LoginUser(string mail, string pas)
+        private PersonModels LoginUser(string mail, string pas)
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 var Logindb = uow.GetRepository<PersonModels>().GetAll().FirstOrDefault(x => x.Email == mail && x.Password == pas);
                 if (Logindb != null)
                 {
-                    return true;
+                    return Logindb;
                 }
                 else
                 {
                     TempData["HataliMesaj"] = "Hata  oluştu yeniden dene";
-                    return false;
+                    return null;
                 }
 
             }
@@ -92,14 +127,13 @@ namespace Employee.Presentation.Controllers
         /// <summary>
         /// Kullanıcı kayıt ekranıdır. Hangi Companye mensup olduğunu seçmesi için companyler listelendi
         /// </summary>
-        /// <returns></returns>
-        
+        /// <returns></returns>    
         [HttpGet]
         public IActionResult Register()
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
-                ViewBag.list =   uow.GetRepository<CompanyModels>().GetAll().ToList();
+                ViewBag.list = uow.GetRepository<CompanyModels>().GetAll().ToList();
 
                 return View();
             }
@@ -111,18 +145,18 @@ namespace Employee.Presentation.Controllers
         /// <returns></returns>
         [HttpPost]
         public IActionResult Register(PersonModels person)
-            {
+        {
 
             using (var uow = new UnitOfWork<EmployeeDbContext>())
             {
                 try
-                {                
-                    uow.GetRepository<PersonModels>().Add(person);                                   
-                    uow.SaveChanges();                   
+                {
+                    uow.GetRepository<PersonModels>().Add(person);
+                    uow.SaveChanges();
                     TempData["BasariliMesaj"] = "Ekleme İşlemi Başarıyla Gerçekleşti";
                 }
                 catch (Exception)
-               {
+                {
                     TempData["HataliMesaj"] = "Hata  oluştu yeniden dene";
                 }
                 return RedirectToAction("Login");

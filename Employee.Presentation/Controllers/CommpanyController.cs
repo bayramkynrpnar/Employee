@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Employe.DataAccess;
 using Employee.Data.Models;
-using Microsoft.AspNetCore.Authorization;
+using Employee.Presentation.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 
 
 namespace Employee.Presentation.Controllers
 {
-    [Authorize]
+    [AuthorizationAttribute]
+
 
     public class CommpanyController : Controller
     {
@@ -21,7 +19,6 @@ namespace Employee.Presentation.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        
         public IActionResult Index()
         {
             using (var uow = new UnitOfWork<EmployeeDbContext>())
