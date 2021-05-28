@@ -3,27 +3,29 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:53505",
+      "applicationUrl": "http://localhost:63410",
       "sslPort": 0
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "Company",
       "environmentVariables": {
-        "MYSQL_URI": "server=localhost;port=3306;database=ntier;user=root;password=Ba26491312",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "MYSQL_URI"
       }
     },
-    "Employee.Presentation": {
+    "Employee.Middleware": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "Company",
       "environmentVariables": {
         "MYSQL_URI": "server=localhost;port=3306;database=ntier;user=root;password=Ba26491312",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5008"
+      "applicationUrl": "http://localhost:5009"
     }
   }
 }

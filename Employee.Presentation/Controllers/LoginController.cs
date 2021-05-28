@@ -26,7 +26,7 @@ using Employee.Presentation.Authorization;
 
 namespace Employee.Presentation.Controllers
 {
-   
+
     public class LoginController : Controller
     {
 
@@ -59,29 +59,28 @@ namespace Employee.Presentation.Controllers
         [HttpPost]
         public IActionResult Login(PersonModels personModels)
         {
-            IActionResult response = Unauthorized();
             personModels.Password = CryptoHelpers.Instance.MD5(personModels.Password);
-                var checkUser = LoginUser(personModels.Email, personModels.Password);
+            var checkUser = LoginUser(personModels.Email, personModels.Password);
             if (checkUser != null)
             {
-               
 
-                var tokenString =TokenFactory.GenerateJSONWebToken(checkUser,_config);// token string oluyor burda
+
+                var tokenString = TokenFactory.GenerateJSONWebToken(checkUser, _config);// token string oluyor burda
 
                 HttpContext.Response.Cookies.Append("UserToken", tokenString,
                    new CookieOptions()
                    {
                        Domain = Environment.GetEnvironmentVariable("COOKIE_DOMAIN"),
                        Expires = DateTimeOffset.Now.AddHours(4)
-                   });                
-                
+                   });
+
 
                 return RedirectToAction("Index", "Commpany");
             }
             return View();
         }
 
-      
+
 
 
 
@@ -89,14 +88,14 @@ namespace Employee.Presentation.Controllers
         /// Çıkış yapmak için kullanılır
         /// </summary>
         /// <returns></returns>
-        
+
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             HttpContext.Response.Cookies.Delete("UserToken");
             return RedirectToAction("Login", "Login");
         }
-      
+
         /// <summary>
         /// Mail ve şifre doğru girildiyse true döner, girilmediyse false döner
         /// </summary>

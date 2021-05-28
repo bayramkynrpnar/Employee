@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Employee.Data.Models;
@@ -37,6 +38,14 @@ namespace Employee.Presentation
             {
                 opts.IdleTimeout = TimeSpan.FromHours(4);
                 opts.Cookie.IsEssential = false;
+            });
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("Employee", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Employee",
+                    Version = "1.0.0"
+                });
             });
 
             ///Yetkilendirme için cookie ekledik
@@ -88,6 +97,11 @@ namespace Employee.Presentation
             }
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("Employee/swagger.json", "Swagger Monitoring V1");
+            });
 
             app.UseRouting();
 
